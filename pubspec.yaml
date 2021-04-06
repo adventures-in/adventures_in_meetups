@@ -1,5 +1,5 @@
 name: adventures_in_meetups
-description: 
+description: A Flutter web app for the Adventures In [Dart, Flutter, Firebase] Meetup group.
 
 publish_to: 'none'
 
