@@ -1,65 +1,78 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(AppWidget());
 }
 
-class MyApp extends StatelessWidget {
+class AppWidget extends StatelessWidget {
+  final Future<FirebaseApp> _initializationFuture = Firebase.initializeApp();
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+    return FutureBuilder(
+        future: _initializationFuture,
+        builder: (context, snapshot) => (snapshot.hasError)
+            ? ErrorPage()
+            : (snapshot.connectionState == ConnectionState.done)
+                ? AuthCheck()
+                : WaitingPage());
+  }
+}
+
+class WaitingPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return CircularProgressIndicator();
+  }
+}
+
+class ErrorPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Material(child: Text('There was an error')),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
+class AuthCheck extends StatelessWidget {
+  final _userStream = FirebaseAuth.instance.authStateChanges();
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  Widget build(BuildContext context) => StreamBuilder(
+        stream: _userStream,
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return ErrorPage();
+          }
+
+          if (snapshot.hasData) {
+            return (snapshot.data == null)
+                ? SignInPage()
+                : UserPage(user: snapshot.data as User);
+          } else {
+            return WaitingPage();
+          }
+        },
+      );
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
+class SignInPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
   }
+}
+
+class UserPage extends StatelessWidget {
+  UserPage({required this.user});
+
+  final User user;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ),
-    );
+    return Container();
   }
 }
