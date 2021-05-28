@@ -25,4 +25,12 @@ For members of the [Adventures In [Dart,Flutter,Firebase]](https://www.meetup.co
 
 ### Add activities for the upcoming meetup 
 
+## Extas 
 
+### Hosting 
+
+We host a page for a gitpod button:
+- using firebase hosting with a rewrite 
+- the rewrite loads the page at web/gitpod/index.html 
+- the rewrite occurs whenever a request with /gitpod/* comes after the host name 
+- see firebase.json for rewrite info 
