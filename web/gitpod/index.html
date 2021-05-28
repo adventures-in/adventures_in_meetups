@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!--
+    If you are serving your web app in a path other than the root, change the
+    href value below to reflect the base path you are serving from.
+
+    The path provided below has to start and end with a slash "/" in order for
+    it to work correctly.
+
+    For more details:
+    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+  -->
+  <base href="/gitpod/">
+
+  <meta charset="UTF-8">
+  <meta name="description" content="GitPod button">
+
+  <title>GitPod</title>
+</head>
+<body>
+
+  <style>
+    .center {
+      margin: 0;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      -ms-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+    }
+
+    button {
+      background-color: Transparent;
+      background-repeat:no-repeat;
+      border: none;
+      cursor:pointer;
+      overflow: hidden;
+      outline:none;
+    }
+
+    body {background-color: rgb(238, 238, 238);}
+  </style>
+  
+  <div class="center">
+    <button type="button" onclick="redirect()"><img src="https://gitpod.io/button/open-in-gitpod.svg"/></button>
+  </div>
+
+  <script>
+    function redirect(obj) {
+      const urlParams = new URLSearchParams(window.location.search);
+      const repo = urlParams.get('repo');
+      window.open("https://gitpod.io/#https://github.com/Adventures-In/"+repo);
+    }
+  </script>
+</body>
+</html>

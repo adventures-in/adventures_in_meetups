@@ -47,3 +47,11 @@ app.*.map.json
 
 # Firebase credentials
 macos/Runner/GoogleService-Info.plist
+
+# Ignore as likely not applicable for everyone contributing to the project
+# see: https://stackoverflow.com/a/52131191/1992736 
+.firebase/
+
+# Don't commit the selected project as anyone checking out the repo will want
+# need to use their own project
+.firebaserc
