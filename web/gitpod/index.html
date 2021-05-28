@@ -19,12 +19,38 @@
   <title>GitPod</title>
 </head>
 <body>
+
+  <style>
+    .center {
+      margin: 0;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      -ms-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+    }
+
+    button {
+      background-color: Transparent;
+      background-repeat:no-repeat;
+      border: none;
+      cursor:pointer;
+      overflow: hidden;
+      outline:none;
+    }
+
+    body {background-color: rgb(238, 238, 238);}
+  </style>
   
-  <button class="button" id="design-button" onclick="redirect()">Design Now</button>
+  <div class="center">
+    <button type="button" onclick="redirect()"><img src="https://gitpod.io/button/open-in-gitpod.svg"/></button>
+  </div>
 
   <script>
     function redirect(obj) {
-      window.location.href = "http://test/?sessionid=guest&ref="+booktype.value+pagesize.value+"&projectName="+projtitle.value+"/"
+      const urlParams = new URLSearchParams(window.location.search);
+      const repo = urlParams.get('repo');
+      window.open("https://gitpod.io/#https://github.com/Adventures-In/"+repo);
     }
   </script>
 </body>
