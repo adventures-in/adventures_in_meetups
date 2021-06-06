@@ -29,8 +29,22 @@ For members of the [Adventures In [Dart,Flutter,Firebase]](https://www.meetup.co
 
 ### Hosting 
 
-We host a page for a gitpod button:
-- using firebase hosting with a rewrite 
-- the rewrite loads the page at web/gitpod/index.html 
-- the rewrite occurs whenever a request with /gitpod/* comes after the host name 
-- see firebase.json for rewrite info 
+We host a page with a single button - the button just opens a project using gitpod, based on the query parameters in the request. The page is used for embedding in [gather.town](gather.town) so that players can interact with objects to open different projects with gitpod. 
+
+Two query parameters are accepted: `repo` & `gitpod`
+- `repo`: the project repo name, gets wrapped in gitpod url, creates and runs a gitpod instance
+- `gitpod`: the gitpod instance url
+
+#### Rewrite 
+
+We use firebase hosting and set a rewrite so any request with /gitpod/* after the host name is rewritten to use `web/gitpod/index.html`.
+
+> See firebase.json for rewrite info.
+
+#### Deploying 
+
+There is a predeploy hook to build for web so just run:
+
+```sh
+firebase deploy --only hosting
+```

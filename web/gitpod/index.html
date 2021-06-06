@@ -49,8 +49,18 @@
   <script>
     function redirect(obj) {
       const urlParams = new URLSearchParams(window.location.search);
+
       const repo = urlParams.get('repo');
-      window.open("https://gitpod.io/#https://github.com/Adventures-In/"+repo);
+      if(repo != null) {
+        window.open("https://gitpod.io/#https://github.com/Adventures-In/"+repo);
+        return;
+      }
+      
+      const gitpod = urlParams.get('gitpod');
+      if(gitpod != null) {
+        window.open("https://"+gitpod);
+        return;
+      }
     }
   </script>
 </body>
