@@ -1,0 +1,12 @@
+query Basic($first: Int) {
+    organization(login:"Adventures-In") {
+    membersWithRole(first: $first) {
+      edges {
+        node {
+          name
+          avatarUrl
+        }
+      }
+    }
+  }
+}
